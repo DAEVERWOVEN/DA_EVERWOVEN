@@ -24,3 +24,27 @@
 @media(max-width:1080px){.header-inner{gap:11px}.header-end{gap:10px}.audio-toggle{font-size:.69rem;padding:6px 8px}}
 @media(max-width:650px){.header-inner{flex-wrap:wrap;min-height:68px}.header-end{margin-left:auto;gap:5px}.audio-toggle{padding:5px 6px;font-size:.61rem;min-height:32px}.audio-toggle .music-icon{font-size:.88rem}.brand strong{font-size:.76rem}.brand small{font-size:.44rem}.creator-credit--hero{margin:-8px auto 12px}.download-actions{max-width:100%}}
 @media(max-width:380px){.header-inner{padding:8px 9px}.brand img{width:31px;height:31px}.brand{gap:5px}.lang a{padding:5px 4px;font-size:.58rem}.audio-toggle{padding:5px;font-size:.55rem}}
+
+
+/* Keep the complete original cover visible; never crop the title or portraits. */
+.hero-art{
+  height:auto;
+  max-height:none;
+  aspect-ratio:1672/497;
+  background:#100911;
+}
+.hero-art picture,.hero-art img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1672/497;
+}
+.hero-art img{object-fit:contain;object-position:center center}
+.hero-art:before{box-shadow:inset 0 0 30px 8px #12040f55}
+.hero-art:after{inset:88% 0 0;background:linear-gradient(0deg,#0e071114,transparent)}
+@media(max-width:650px){
+  .hero-art{height:auto;min-height:0;max-height:none;aspect-ratio:1150/345}
+  .hero-art picture,.hero-art img{height:auto;aspect-ratio:1150/345;object-fit:contain}
+  .hero-art:after{inset:88% 0 0;background:linear-gradient(0deg,#0e071114,transparent)}
+  .hero-content{margin:14px auto 0}
+}

@@ -70,20 +70,29 @@
   }
 }
 
-
-/* The real decorative cover logo, preserved on phones rather than
-   replacing it with a plain typeset DA UNIVERSE title. */
-.hero-logo-art{display:none}
+/* Mobile: a single complete original illustration with its ornate logo.
+   No separate overlay or duplicated banner fragments. */
+.hero-eyebrow-mobile{display:none}
 @media(max-width:650px){
-  .hero-content .hero-logo-art{
-    display:block;
-    width:min(100%,600px);
-    max-width:100%;
+  .hero-art{
+    width:100%;
     height:auto;
-    margin:7px auto 4px;
-    filter:drop-shadow(0 1px 8px #0008);
+    min-height:0;
+    max-height:none;
+    aspect-ratio:1536/798;
   }
-  /* Preserve the semantic heading for accessibility, without a visual duplicate. */
+  .hero-art picture,.hero-art img{
+    display:block;
+    width:100%;
+    height:auto;
+    aspect-ratio:1536/798;
+    object-fit:contain;
+    object-position:center center;
+  }
+  .hero-eyebrow-desktop{display:none}
+  .hero-eyebrow-mobile{display:inline}
+  .hero-content{margin:14px auto 0}
+  /* Title is already embedded in the complete cover; keep semantic H1. */
   .hero .hero-content h1{
     position:absolute;
     width:1px;height:1px;padding:0;margin:-1px;

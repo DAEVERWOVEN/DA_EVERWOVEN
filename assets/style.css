@@ -57,3 +57,15 @@
   .desktop-nav{justify-self:center}
   .header-end{justify-self:end}
 }
+
+
+/* Homepage hero buttons: equal proportions, centered as a matched pair. */
+@media (min-width:651px){
+  .hero-content > .actions > .ornate-btn{
+    box-sizing:border-box;
+    flex:0 1 345px;
+    width:345px;
+    max-width:100%;
+    text-align:center;
+  }
+}

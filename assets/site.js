@@ -47,22 +47,23 @@ detectLatestPublicApk();
 // a single AudioBufferSourceNode then loops sample-accurately without gaps.
 (() => {
   const audioElement = document.getElementById('da-theme-audio');
-  const scriptElement = document.querySelector('script[src$="site.js"]');
+  const scriptElement = document.querySelector('script[src*="site.js"]');
   if (!audioElement || !scriptElement) return;
   const siteRoot = new URL('../', scriptElement.src);
   const musicURL = new URL('assets/da-universe-theme.mp3', siteRoot);
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   let ctx = null, gain = null, source = null, loopBuffer = null, loadPromise = null;
-  let playing = false, fallback = false, sequence = 0;
+  let playing = false, fallback = false, sequence = 0, starting = null;
+  // A fresh visit always requests music. Muting is retained only while
+  // navigating within this SPA, not across a new visit or reload.
   let wanted = true;
-  try { wanted = localStorage.getItem('da-site-sound') !== 'off'; } catch (_) {}
 
   function getToggle() { return document.querySelector('[data-audio-toggle]'); }
   function renderSoundState() {
     const button = getToggle();
     if (!button) return;
     const lang = document.documentElement.lang || 'uk';
-    const waiting = {uk:'Звук: Натисни', en:'Sound: Tap to play', ru:'Звук: Нажми'};
+    const waiting = {uk:'Звук: Увімкнути', en:'Sound: Play', ru:'Звук: Включить'};
     const label = button.querySelector('[data-audio-state]');
     const icon = button.querySelector('.music-icon');
     const active = playing && wanted;
@@ -114,43 +115,57 @@ detectLatestPublicApk();
       }).catch(error => { loadPromise = null; throw error; });
     return loadPromise;
   }
-  async function startSound() {
-    if (!wanted || playing) return;
-    const attempt = ++sequence;
+  function startSound() {
+    if (!wanted || playing) return starting;
+    const attempt = sequence;
+    let context = null, running = null, setupError = null;
     try {
-      // Calling resume() inside the interaction handler unlocks Web Audio
-      // on browsers that block autoplay.
-      const context = initContext();
-      const running = context.resume();
-      const buffer = prepareLoop();
-      await Promise.all([running, buffer]);
-      if (!wanted || playing || attempt !== sequence || context.state !== 'running') return;
-      source = context.createBufferSource();
-      source.buffer = loopBuffer;
-      source.loop = true;
-      const fadeSeconds = Math.min(0.35, loopBuffer.duration / 8);
-      source.loopStart = fadeSeconds;
-      source.loopEnd = loopBuffer.duration;
-      source.connect(gain);
-      source.start(0);
-      fallback = false;
-      playing = true;
-      renderSoundState();
-    } catch (_) {
-      // On older browsers the normal HTML audio player remains available.
-      if (!wanted || playing || attempt !== sequence) return;
+      context = initContext();
+      // Reissue resume *inside* every real user gesture, even if a previous
+      // autoplay attempt is still waiting for Chrome to unlock AudioContext.
+      running = context.resume();
+    } catch (error) {
+      setupError = error;
+    }
+    // Only one decode/start pipeline may run. Multiple rapid gestures must
+    // not invalidate each other or demand a second tap.
+    if (starting) return starting;
+    starting = (async () => {
       try {
-        audioElement.volume = 0.5;
-        audioElement.loop = true;
-        await audioElement.play();
-        if (!wanted || attempt !== sequence) { audioElement.pause(); return; }
-        fallback = true;
+        if (setupError) throw setupError;
+        await Promise.all([running, prepareLoop()]);
+        if (!wanted || playing || attempt !== sequence || context.state !== 'running') return;
+        source = context.createBufferSource();
+        source.buffer = loopBuffer;
+        source.loop = true;
+        const fadeSeconds = Math.min(0.35, loopBuffer.duration / 8);
+        source.loopStart = fadeSeconds;
+        source.loopEnd = loopBuffer.duration;
+        source.connect(gain);
+        source.start(0);
+        fallback = false;
         playing = true;
       } catch (_) {
-        playing = false; // Never claim music is audible if playback was denied.
+        if (!wanted || playing || attempt !== sequence) return;
+        try {
+          audioElement.volume = 0.5;
+          audioElement.loop = true;
+          await audioElement.play();
+          if (!wanted || attempt !== sequence) {
+            audioElement.pause();
+            return;
+          }
+          fallback = true;
+          playing = true;
+        } catch (_) {
+          playing = false; // Never report sound ON if browser blocked playback.
+        }
+      } finally {
+        starting = null;
+        renderSoundState();
       }
-      renderSoundState();
-    }
+    })();
+    return starting;
   }
   function stopSound() {
     wanted = false;
@@ -166,12 +181,10 @@ detectLatestPublicApk();
     }
     playing = false;
     fallback = false;
-    try { localStorage.setItem('da-site-sound', 'off'); } catch (_) {}
     renderSoundState();
   }
   function requestSound() {
     wanted = true;
-    try { localStorage.setItem('da-site-sound', 'on'); } catch (_) {}
     renderSoundState();
     startSound();
   }
@@ -180,10 +193,14 @@ detectLatestPublicApk();
   // begin on the very first permitted interaction without resetting on links.
   renderSoundState();
   if (wanted) startSound();
-  document.addEventListener('pointerdown', () => {
+  document.addEventListener('pointerdown', event => {
+    // A sound-button click owns its start/stop action. Unlocking audio here
+    // could make the subsequent click immediately turn a just-started sound OFF.
+    if (event.target.closest('[data-audio-toggle]')) return;
     if (wanted && !playing) startSound();
   }, {capture:true});
-  document.addEventListener('keydown', () => {
+  document.addEventListener('keydown', event => {
+    if (event.target.closest('[data-audio-toggle]')) return;
     if (wanted && !playing) startSound();
   }, {capture:true});
 

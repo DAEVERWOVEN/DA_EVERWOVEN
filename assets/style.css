@@ -99,3 +99,9 @@
     overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
   }
 }
+
+/* Approved frameless DA UNIVERSE Qunari banner: preserve original composition. */
+.hero-art {height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:1673/670!important;border:0!important;background:transparent!important;overflow:visible!important;}
+.hero-art picture,.hero-art img {display:block;width:100%;height:auto!important;aspect-ratio:1673/670!important;object-fit:contain!important;object-position:center center!important;}
+.hero-art:before,.hero-art:after {display:none!important;}
+@media (max-width:650px) {.hero-art,.hero-art picture,.hero-art img {aspect-ratio:1673/670!important;height:auto!important;min-height:0!important;max-height:none!important;}}

@@ -208,3 +208,14 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 .header-end>.audio-toggle{justify-content:center;padding:4px 6px}
 @media(max-width:650px){.header-end{--control-width:120px;--control-height:36px}.header-end>.lang a{gap:3px;padding:2px}.header-end>.lang .language-flag{width:18px;height:12px}.header-end>.audio-toggle{font-size:.73rem}}
 @media(max-width:380px){.header-end{--control-width:108px;--control-height:34px}.header-end>.audio-toggle{font-size:.65rem}.header-end>.lang a{font-size:.65rem;gap:2px}.header-end>.lang .language-flag{width:16px;height:11px}}
+
+/* v10: approved original gold-and-ruby wordmark and two-line desktop introduction. */
+.brand .brand-wordmark{display:block;position:relative;width:clamp(185px,17vw,256px);line-height:0;background:none!important;-webkit-text-fill-color:initial;-webkit-text-stroke:0;filter:none;overflow:visible;flex:none}
+.brand .brand-wordmark img{display:block;width:100%;height:auto;max-width:none;border:0;border-radius:0;box-shadow:none;filter:drop-shadow(0 2px 2px #100300);animation:wordmark-glint 6s ease-in-out infinite}
+@keyframes wordmark-glint{0%,100%{filter:drop-shadow(0 2px 2px #100300) brightness(1)}48%{filter:drop-shadow(0 1px 3px #e6ac4b50) brightness(1.15)}55%{filter:drop-shadow(0 2px 2px #100300) brightness(1)}}
+@media(min-width:651px){.hero-lead.illuminated.centered-manuscript{width:min(100%,740px);max-width:740px;}}
+@media(max-width:650px){.brand .brand-wordmark{width:clamp(106px,30vw,175px)}}
+@media(prefers-reduced-motion:reduce){.brand .brand-wordmark img{animation:none}}
+
+/* Center the main feature section heading in both locales. */
+.section > .container > .section-heading{text-align:center;margin-inline:auto;}

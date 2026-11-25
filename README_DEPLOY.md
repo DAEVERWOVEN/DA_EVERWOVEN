@@ -4,7 +4,7 @@ A ready-to-publish, no-dependencies multilingual static website.
 
 ## What works
 - Ukrainian is the default language at `/`.
-- English and Russian have their own crawlable pages (`/en/`, `/ru/`).
+- English has its own crawlable pages (`/en/`). Ukrainian is also available at `/uk/`.
 - All menu links, language switches, Privacy Policy, Terms and About pages work.
 - "Enter Thedas" goes to a real information / download page, not a dead button.
 - The Download / Update APK button uses the supplied Google Drive file link; the releases folder is a visible alternative. Public access must be checked separately.
@@ -28,12 +28,12 @@ Double-click `index.html` in any browser. It works offline.
 - **Preferred zero-maintenance update method**: Google Drive → select the SAME uploaded APK file → More / File information → **Manage versions → Upload new version**. This replaces the contents while keeping the same Drive file ID and website URL. It does not matter if the local filename stays the same; a new separate upload always creates a different ID.
 - When the user separately uploads a new APK with the same filename, the folder link still works but the static file link continues pointing to the earlier file. To automatically resolve the newest separate APK, the site includes an **optional Google Drive API browser-key mode** in `assets/site.js`: set `driveApiKey` to a properly **HTTP-referrer restricted + Drive API restricted** Google Cloud API key after enabling Google Drive API and public folder access. The site then lists the public folder and selects the latest modified `.apk`; if this fails, the original link remains as a fallback. Without the key, the site DOES NOT automatically discover separate new uploads. See official Google public-folder API documentation.
 - The download opens Google Drive UI; Google may require an extra confirmation for large or unfamiliar APKs.
-- **Version naming**: the 1.8.8 Android Studio *source* in the paired ZIP is not a built APK. Rebuild it and replace the shared APK after testing; do not assume the current public link already serves 1.8.8.
+- **Version naming**: the Android Studio source is not a built APK. Rebuild and replace the shared APK after testing; do not assume the current public link already serves the latest version.
 - To preserve an Android user's installed data when updating, keep the application ID and signing key unchanged, increment `versionCode`, and install the new APK over the old version. Avoid deleting or clearing app data.
 
 ## Original website music
-- The exact user-provided original song is included as `assets/da-universe-theme.mp3` (2:50).
-- An accessible music ON/OFF control appears in the header in all 3 locales on every page. Playback is user-initiated because browsers normally restrict autoplay. Background pages may require a fresh tap after navigation.
+- Three user-provided original tracks are included and play in sequence.
+- An accessible music ON/OFF control appears in the header in both supported languages on every page. Playback is user-initiated because browsers normally restrict autoplay. Background pages may require a fresh tap after navigation.
 - The site does not transmit the player's game-save data or manage their Google Sign-In.
 
 ## Attribution
@@ -45,3 +45,17 @@ Publishing this website **does not automatically switch OAuth to `In production`
 
 ## Project disclaimer
 Non-commercial, independent fan work; not endorsed by EA / BioWare.
+
+## Crimson leather edition — 2026-11-25
+- Deploy to the existing repository `dauniversebook/DA_UNIVERSE` on its configured Pages branch.
+- Delete the obsolete language directory from the live repository when deploying; uploading the new files alone will not remove obsolete files on the server.
+- Preserve any repository-specific Google verification files not present in this archive.
+- Includes the approved leather background, original game frame/divider textures, lute, illuminated initials and bundled original soundtrack.
+- Public download and Drive folder links are unchanged.
+
+## Search indexing
+- Add the URL-prefix property https://dauniversebook.github.io/DA_UNIVERSE/ in Google Search Console.
+- Verify ownership and submit `sitemap.xml`. Request indexing of the home page and download page after deployment.
+- Sitemap lists ten canonical URLs, with Ukrainian/English alternates; `/uk/` duplicates point to the Ukrainian canonical root pages.
+- Project-level robots.txt is included; host-root robots.txt is controlled by the GitHub Pages host.
+- Rankings are not guaranteed. Do not use keyword stuffing or hidden search terms.

@@ -41,220 +41,38 @@ async function detectLatestPublicApk() {
 }
 detectLatestPublicApk();
 
-
-// Continuous music stays in this document during internal SPA page transitions.
-// The MP3 is decoded and its tail is cross-faded into the beginning in PCM;
-// a single AudioBufferSourceNode then loops sample-accurately without gaps.
+// Keep a single audio element alive across every internal page and language switch.
 (() => {
-  const audioElement = document.getElementById('da-theme-audio');
-  const scriptElement = document.querySelector('script[src*="site.js"]');
-  if (!audioElement || !scriptElement) return;
-  const siteRoot = new URL('../', scriptElement.src);
-  const musicURL = new URL('assets/da-universe-theme.mp3', siteRoot);
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  let ctx = null, gain = null, source = null, loopBuffer = null, loadPromise = null;
-  let playing = false, fallback = false, sequence = 0, starting = null;
-  // A fresh visit always requests music. Muting is retained only while
-  // navigating within this SPA, not across a new visit or reload.
-  let wanted = true;
-
-  function getToggle() { return document.querySelector('[data-audio-toggle]'); }
-  function renderSoundState() {
-    const button = getToggle();
-    if (!button) return;
-    const lang = document.documentElement.lang || 'uk';
-    const waiting = {uk:'Звук: Увімкнути', en:'Sound: Play', ru:'Звук: Включить'};
-    const label = button.querySelector('[data-audio-state]');
-    const icon = button.querySelector('.music-icon');
-    const active = playing && wanted;
-    button.setAttribute('aria-pressed', active ? 'true' : 'false');
-    button.classList.toggle('audio-toggle--on', active);
-    if (label) label.textContent = active ? button.dataset.textOn :
-      wanted ? (waiting[lang] || waiting.uk) : button.dataset.textOff;
-    if (icon) icon.textContent = active ? '♫' : '♪';
-  }
-  function initContext() {
-    if (!AudioContextClass) throw new Error('Web Audio unsupported');
-    if (!ctx) {
-      ctx = new AudioContextClass();
-      gain = ctx.createGain();
-      gain.gain.value = 0.5;
-      gain.connect(ctx.destination);
-    }
-    return ctx;
-  }
-  function prepareLoop() {
-    if (loopBuffer) return Promise.resolve(loopBuffer);
-    if (loadPromise) return loadPromise;
-    const context = initContext();
-    loadPromise = fetch(musicURL.href)
-      .then(response => {
-        if (!response.ok) throw new Error('Audio unavailable');
-        return response.arrayBuffer();
-      })
-      .then(raw => context.decodeAudioData(raw))
-      .then(decoded => {
-        // Crossfade the final samples into the beginning. On every repeat,
-        // the loop jumps to the sample immediately after the overlapped intro.
-        // The initial play still starts at 0, preserving the complete opening.
-        const fade = Math.min(Math.round(decoded.sampleRate * 0.35), Math.floor(decoded.length / 8));
-        if (fade < 2) { loopBuffer = decoded; return loopBuffer; }
-        const length = decoded.length;
-        const mixed = context.createBuffer(decoded.numberOfChannels, length, decoded.sampleRate);
-        for (let ch = 0; ch < decoded.numberOfChannels; ch++) {
-          const input = decoded.getChannelData(ch);
-          const output = mixed.getChannelData(ch);
-          output.set(input);
-          for (let i = 0; i < fade; i++) {
-            const t = i / (fade - 1);
-            output[length - fade + i] = input[length - fade + i] * (1 - t) + input[i] * t;
-          }
-        }
-        loopBuffer = mixed;
-        return mixed;
-      }).catch(error => { loadPromise = null; throw error; });
-    return loadPromise;
-  }
-  function startSound() {
-    if (!wanted || playing) return starting;
-    const attempt = sequence;
-    let context = null, running = null, setupError = null;
-    try {
-      context = initContext();
-      // Reissue resume *inside* every real user gesture, even if a previous
-      // autoplay attempt is still waiting for Chrome to unlock AudioContext.
-      running = context.resume();
-    } catch (error) {
-      setupError = error;
-    }
-    // Only one decode/start pipeline may run. Multiple rapid gestures must
-    // not invalidate each other or demand a second tap.
-    if (starting) return starting;
-    starting = (async () => {
-      try {
-        if (setupError) throw setupError;
-        await Promise.all([running, prepareLoop()]);
-        if (!wanted || playing || attempt !== sequence || context.state !== 'running') return;
-        source = context.createBufferSource();
-        source.buffer = loopBuffer;
-        source.loop = true;
-        const fadeSeconds = Math.min(0.35, loopBuffer.duration / 8);
-        source.loopStart = fadeSeconds;
-        source.loopEnd = loopBuffer.duration;
-        source.connect(gain);
-        source.start(0);
-        fallback = false;
-        playing = true;
-      } catch (_) {
-        if (!wanted || playing || attempt !== sequence) return;
-        try {
-          audioElement.volume = 0.5;
-          audioElement.loop = true;
-          await audioElement.play();
-          if (!wanted || attempt !== sequence) {
-            audioElement.pause();
-            return;
-          }
-          fallback = true;
-          playing = true;
-        } catch (_) {
-          playing = false; // Never report sound ON if browser blocked playback.
-        }
-      } finally {
-        starting = null;
-        renderSoundState();
-      }
-    })();
-    return starting;
-  }
-  function stopSound() {
-    wanted = false;
-    sequence++;
-    if (source) {
-      try { source.stop(); } catch (_) {}
-      try { source.disconnect(); } catch (_) {}
-      source = null;
-    }
-    if (fallback || !audioElement.paused) {
-      audioElement.pause();
-      audioElement.currentTime = 0;
-    }
-    playing = false;
-    fallback = false;
-    renderSoundState();
-  }
-  function requestSound() {
-    wanted = true;
-    renderSoundState();
-    startSound();
-  }
-
-  // Browsers may deny unprompted sound. Try immediately; if denied,
-  // begin on the very first permitted interaction without resetting on links.
-  renderSoundState();
-  if (wanted) startSound();
-  document.addEventListener('pointerdown', event => {
-    // A sound-button click owns its start/stop action. Unlocking audio here
-    // could make the subsequent click immediately turn a just-started sound OFF.
-    if (event.target.closest('[data-audio-toggle]')) return;
-    if (wanted && !playing) startSound();
-  }, {capture:true});
-  document.addEventListener('keydown', event => {
-    if (event.target.closest('[data-audio-toggle]')) return;
-    if (wanted && !playing) startSound();
-  }, {capture:true});
-
-  // Fetch and swap HTML shell only. The audio node, decoded buffer and JS
-  // stay in place so crossing pages/languages never interrupts the track.
-  let pendingNavigation = null;
-  async function loadPage(destination, addHistory) {
-    const url = new URL(destination, location.href);
-    if (pendingNavigation) pendingNavigation.abort();
-    const controller = new AbortController();
-    pendingNavigation = controller;
-    try {
-      const response = await fetch(url.href, {signal:controller.signal});
-      if (!response.ok) throw new Error('Navigation failed');
-      const documentHTML = new DOMParser().parseFromString(await response.text(), 'text/html');
-      const shell = documentHTML.querySelector('.page-shell');
-      const current = document.querySelector('.page-shell');
-      if (!shell || !current || controller.signal.aborted) throw new Error('Invalid page');
-      current.replaceWith(shell);
-      document.title = documentHTML.title;
-      document.documentElement.lang = documentHTML.documentElement.lang;
-      const newDescription = documentHTML.querySelector('meta[name="description"]');
-      const oldDescription = document.querySelector('meta[name="description"]');
-      if (newDescription && oldDescription) oldDescription.content = newDescription.content;
-      if (addHistory) history.pushState({daUniverse:true}, '', url.href);
-      window.scrollTo({top:0,behavior:'instant'});
-      renderSoundState();
-      detectLatestPublicApk();
-    } catch (error) {
-      if (error.name !== 'AbortError') location.assign(url.href);
-    } finally {
-      if (pendingNavigation === controller) pendingNavigation = null;
-    }
-  }
-  history.scrollRestoration = 'manual';
-  document.addEventListener('click', event => {
-    const button = event.target.closest('[data-audio-toggle]');
-    if (button) {
-      event.preventDefault();
-      if (playing) stopSound();
-      else requestSound();
-      return;
-    }
-    const link = event.target.closest('a[href]');
-    if (!link || event.defaultPrevented || event.button !== 0 ||
-        event.metaKey || event.ctrlKey || event.altKey || event.shiftKey ||
-        link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
-    const url = new URL(link.href, location.href);
-    if (url.origin !== location.origin ||
-        !url.pathname.startsWith(siteRoot.pathname) ||
-        !(url.pathname.endsWith('.html') || url.pathname === siteRoot.pathname)) return;
-    if (url.href === location.href) return;
-    event.preventDefault();
-    loadPage(url, true);
-  });
-  window.addEventListener('popstate', () => { loadPage(location.href, false); });
+ const audio=document.getElementById('da-theme-audio');
+ const script=document.querySelector('script[src*="site.js"]');
+ if(!audio||!script)return;
+ const root=new URL('../',script.src), assetRoot=new URL('assets/',root);
+ const parts={"2":["audio/theme-2-00.bin","audio/theme-2-01.bin","audio/theme-2-02.bin","audio/theme-2-03.bin","audio/theme-2-04.bin","audio/theme-2-05.bin","audio/theme-2-06.bin","audio/theme-2-07.bin","audio/theme-2-08.bin"],"3":["audio/theme-3-00.bin","audio/theme-3-01.bin","audio/theme-3-02.bin","audio/theme-3-03.bin","audio/theme-3-04.bin","audio/theme-3-05.bin","audio/theme-3-06.bin","audio/theme-3-07.bin","audio/theme-3-08.bin"]}; const tracks=[new URL('da-universe-theme.mp3',assetRoot).href,null,null];
+ async function getTrack(i){if(tracks[i])return tracks[i];const files=parts[String(i+1)];const buffers=await Promise.all(files.map(async p=>{const r=await fetch(new URL(p,assetRoot));if(!r.ok)throw Error('Audio part unavailable');return r.arrayBuffer();}));return tracks[i]=URL.createObjectURL(new Blob(buffers,{type:'audio/mpeg'}));}
+ let wanted=true,playing=false,idx=0,seq=0,pending=null;
+ const toggle=()=>document.querySelector('[data-audio-toggle]');
+ function reflect(){const b=toggle();if(!b)return;const l=b.querySelector('[data-audio-state]');b.setAttribute('aria-pressed',String(playing));b.classList.toggle('audio-toggle--on',playing);if(l)l.textContent=playing?b.dataset.textOn:b.dataset.textOff;}
+ audio.volume=.5;audio.loop=false;audio.src=tracks[0];
+ async function start(){if(!wanted||playing||changing)return;const attempt=++seq;try{await audio.play();if(attempt!==seq||!wanted){if(!wanted)audio.pause();return;}playing=true;getTrack((idx+1)%tracks.length).catch(()=>{});}catch(_){if(attempt===seq)playing=false;}reflect();}
+ function stop(){wanted=false;++seq;audio.pause();playing=false;reflect();}
+ let changing=false; audio.addEventListener('ended',async()=>{playing=false;changing=true;idx=(idx+1)%tracks.length;try{audio.src=await getTrack(idx);changing=false;if(wanted)start();}catch(_){changing=false;reflect();}});
+ audio.addEventListener('error',()=>{playing=false;reflect();});
+ document.addEventListener('pointerdown',e=>{if(!e.target.closest('[data-audio-toggle]')&&wanted&&!playing)start();},{capture:true});
+ document.addEventListener('keydown',e=>{if(!e.target.closest('[data-audio-toggle]')&&wanted&&!playing)start();},{capture:true});
+ reflect();start();
+ // Only the page shell is swapped. The audio element never leaves the document.
+ async function navigate(destination,addHistory){const url=new URL(destination,location.href);if(pending)pending.abort();const ctl=new AbortController();pending=ctl;try{
+ const response=await fetch(url.href,{signal:ctl.signal});if(!response.ok)throw Error('Navigation failed');
+ const doc=new DOMParser().parseFromString(await response.text(),'text/html'),next=doc.querySelector('.page-shell'),current=document.querySelector('.page-shell');if(!next||!current||ctl.signal.aborted)throw Error('Invalid page');
+ if(addHistory)history.pushState({daUniverse:true},'',url.href);
+ current.replaceWith(next);document.title=doc.title;document.documentElement.lang=doc.documentElement.lang;
+ const sel='link[rel="canonical"],link[hreflang],meta[name="description"],meta[property^="og:"],meta[name^="twitter:"],script[type="application/ld+json"]';document.head.querySelectorAll(sel).forEach(e=>e.remove());doc.head.querySelectorAll(sel).forEach(e=>document.head.append(document.importNode(e,true)));
+ window.scrollTo(0,0);reflect();detectLatestPublicApk();
+ }catch(e){if(e.name!=='AbortError')location.assign(url.href);}finally{if(pending===ctl)pending=null;}}
+ history.scrollRestoration='manual';
+ document.addEventListener('click',e=>{const b=e.target.closest('[data-audio-toggle]');if(b){e.preventDefault();if(playing)stop();else{wanted=true;start();}return;}
+ const l=e.target.closest('a[href]');if(!l||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.altKey||e.shiftKey||l.hasAttribute('download')||(l.target&&l.target!=='_self'))return;
+ const u=new URL(l.href,location.href);if(u.origin!==location.origin||!u.pathname.startsWith(root.pathname)||!(u.pathname.endsWith('.html')||u.pathname===root.pathname||u.pathname===root.pathname+'en/'))return;
+ if(u.href===location.href)return;e.preventDefault();navigate(u,true);});
+ window.addEventListener('popstate',()=>navigate(location.href,false));
 })();

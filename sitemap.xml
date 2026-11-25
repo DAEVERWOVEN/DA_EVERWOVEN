@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://dauniversebook.github.io/DA_UNIVERSE/</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dauniversebook.github.io/DA_UNIVERSE/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dauniversebook.github.io/DA_UNIVERSE/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dauniversebook.github.io/DA_UNIVERSE/" />
+  </url>
+  <url>
+    <loc>https://dauniversebook.github.io/DA_UNIVERSE/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dauniversebook.github.io/DA_UNIVERSE/about.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dauniversebook.github.io/DA_UNIVERSE/en/about.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dauniversebook.github.io/DA_UNIVERSE/about.html" />
+  </url>
+  <url>
+    <loc>https://dauniversebook.github.io/DA_UNIVERSE/download.html</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dauniversebook.github.io/DA_UNIVERSE/download.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dauniversebook.github.io/DA_UNIVERSE/en/download.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dauniversebook.github.io/DA_UNIVERSE/download.html" />
+  </url>
+  <url>
+    <loc>https://dauniversebook.github.io/DA_UNIVERSE/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dauniversebook.github.io/DA_UNIVERSE/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dauniversebook.github.io/DA_UNIVERSE/en/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dauniversebook.github.io/DA_UNIVERSE/privacy.html" />
+  </url>
+  <url>
+    <loc>https://dauniversebook.github.io/DA_UNIVERSE/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dauniversebook.github.io/DA_UNIVERSE/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dauniversebook.github.io/DA_UNIVERSE/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dauniversebook.github.io/DA_UNIVERSE/terms.html" />
+  </url>
+  <url>
+    <loc>https://dauniversebook.github.io/DA_UNIVERSE/en/</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dauniversebook.github.io/DA_UNIVERSE/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dauniversebook.github.io/DA_UNIVERSE/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dauniversebook.github.io/DA_UNIVERSE/" />
+  </url>
+  <url>
+    <loc>https://dauniversebook.github.io/DA_UNIVERSE/en/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dauniversebook.github.io/DA_UNIVERSE/about.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dauniversebook.github.io/DA_UNIVERSE/en/about.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dauniversebook.github.io/DA_UNIVERSE/about.html" />
+  </url>
+  <url>
+    <loc>https://dauniversebook.github.io/DA_UNIVERSE/en/download.html</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dauniversebook.github.io/DA_UNIVERSE/download.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dauniversebook.github.io/DA_UNIVERSE/en/download.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dauniversebook.github.io/DA_UNIVERSE/download.html" />
+  </url>
+  <url>
+    <loc>https://dauniversebook.github.io/DA_UNIVERSE/en/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dauniversebook.github.io/DA_UNIVERSE/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dauniversebook.github.io/DA_UNIVERSE/en/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dauniversebook.github.io/DA_UNIVERSE/privacy.html" />
+  </url>
+  <url>
+    <loc>https://dauniversebook.github.io/DA_UNIVERSE/en/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dauniversebook.github.io/DA_UNIVERSE/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dauniversebook.github.io/DA_UNIVERSE/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dauniversebook.github.io/DA_UNIVERSE/terms.html" />
+  </url>
+</urlset>

@@ -385,3 +385,16 @@ html{scroll-padding-top:90px}
 }
 }
 @media(max-width:340px){.hero-lead.illuminated.centered-manuscript .initial-word .lead-copy{white-space:normal}}
+
+/* v35: optical kerning on mobile; center the Ukrainian block by its actual first line,
+   rather than the intrinsic unwrapped width of the remaining text. */
+@media(max-width:999px){
+.hero-lead.illuminated.centered-manuscript{column-gap:0}
+.hero-lead.illuminated.centered-manuscript .initial-word .dropcap{margin-inline-end:-.28em}
+.hero-lead.illuminated.centered-manuscript:lang(uk){grid-template-columns:auto minmax(0,max-content);width:max-content;max-width:100%;justify-content:center}
+.hero-lead.illuminated.centered-manuscript:lang(uk) > .lead-copy{width:0;min-width:100%;max-width:100%;justify-self:center}
+}
+@media(max-width:340px){
+.hero-lead.illuminated.centered-manuscript:lang(uk){grid-template-columns:auto minmax(0,1fr);width:100%}
+.hero-lead.illuminated.centered-manuscript:lang(uk) > .lead-copy{width:auto;min-width:0}
+}

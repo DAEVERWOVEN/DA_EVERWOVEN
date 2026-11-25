@@ -231,3 +231,7 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 .header-end>.audio-toggle,.header-end>.lang{width:var(--control-width);min-width:var(--control-width);max-width:var(--control-width);height:var(--control-height);min-height:var(--control-height);max-height:var(--control-height);flex:0 0 var(--control-width);box-sizing:border-box}
 @media(max-width:650px){.header-inner{padding-inline:10px;gap:8px}.header-inner>.header-end{margin-left:auto;justify-content:flex-end}}
 @media(max-width:420px){.header-inner>.header-end{width:100%;justify-content:flex-end}}
+
+/* v13: original supplied illuminated initials; preserve natural color and top alignment. */
+.illuminated .dropcap,.hero-lead.illuminated .dropcap,.statement .dropcap,.doc-wrap .illuminated .dropcap{margin-top:.42em;margin-right:.23em;margin-bottom:.02em;height:2.55em;filter:none;}
+.dropcap img{object-fit:contain;object-position:center top;filter:none;}

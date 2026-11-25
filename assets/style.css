@@ -331,3 +331,11 @@ a[href="mailto:dauniversebook@gmail.com"]:focus-visible{outline:1px solid #e3b15
 .hero-lead.illuminated.centered-manuscript .lead-copy{display:block;line-height:1.55}
 }
 @media(max-width:999px){.hero-lead.illuminated.centered-manuscript .dropcap{margin-top:.5em}}
+
+/* v31: freeze the complete navigation header while the document scrolls. */
+.page-shell{overflow:visible}
+@supports (overflow:clip){.page-shell{overflow:clip}}
+.site-header{position:sticky;top:0;z-index:1000}
+html{scroll-padding-top:90px}
+@media(max-width:1100px){html{scroll-padding-top:145px}}
+@media(max-width:650px){html{scroll-padding-top:150px}}

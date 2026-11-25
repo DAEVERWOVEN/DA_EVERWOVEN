@@ -241,3 +241,7 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 .header-end>.lang a{background:transparent;color:#edc37f;box-shadow:inset 0 0 0 1px transparent;}
 .header-end>.lang a[aria-current=true]{background:linear-gradient(#bc321b33,#35050244);box-shadow:inset 0 0 0 1px #edbb68,0 1px 3px #230400;}
 .header-end>.lang a:hover{background-color:#bf4c252e;}
+
+/* v15: more legible gamebook subtitle, with the existing metallic gold finish. */
+.hero-eyebrow{font-size:18px;line-height:1.35;}
+@media(max-width:650px){.hero-eyebrow{font-size:15px;letter-spacing:.1em;}}

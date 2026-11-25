@@ -260,3 +260,6 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 .hero .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;justify-content:center;width:min(100%,680px);max-width:680px;margin-inline:auto;gap:17px}
 .hero .actions .ornate-btn{box-sizing:border-box;width:100%;min-width:0;max-width:none;height:100%;min-height:61px;margin:0;padding:14px 19px;text-align:center;justify-content:center}
 @media(max-width:650px){.hero-eyebrow{font-size:17px;letter-spacing:.1em}.hero .actions{grid-template-columns:minmax(0,1fr);max-width:370px;gap:14px}.hero .actions .ornate-btn{min-height:61px}}
+
+/* v18: optical adjustment for the round Ukrainian O; retain approved ruby palette. */
+.illuminated .dropcap img[src$="/041E.webp"],.illuminated .dropcap img[src$="/004F.webp"]{transform:translateY(-.16em)}

@@ -188,3 +188,10 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 
 /* v6: centered plaque headings; preserve manuscript alignment. */
 .feature-card h3{text-align:center; margin-left:auto; margin-right:auto; width:100%;}
+
+/* v7: align illuminated capitals to the first lowercase line's x-height. */
+.illuminated .dropcap,.hero-lead .dropcap,.statement .dropcap{margin-top:.42em;margin-bottom:.02em;height:2.55em;}
+.dropcap img{object-position:center top;}
+.dropcap .cap-fallback{line-height:.9;}
+.hero-lead.illuminated .dropcap{margin-top:.46em;}
+.doc-wrap .illuminated .dropcap{margin-top:.5em;}

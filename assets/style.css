@@ -401,3 +401,33 @@ html{scroll-padding-top:90px}
 
 /* v36: tighten desktop opening capital by 0.20em; preserve approved mobile layout. */
 @media(min-width:1000px){.hero-lead.illuminated.centered-manuscript .initial-word{padding-inline-start:2.10em}}
+
+/* v37: compact homepage introduction without an illustrated initial; matching section-heading gold. */
+.hero .hero-lead.plain-intro,.hero .hero-sub{
+ color:#e9bd71;text-shadow:0 -1px 0 #f4d99b,0 1px 0 #b17632,0 2px 0 #75401c,0 3px 2px #160300,0 4px 6px #000;
+ width:fit-content;max-width:100%;margin-inline:auto;text-align:center;min-height:0;
+ line-height:1.45;text-wrap:balance;
+}
+@supports (background-clip:text){
+ .hero .hero-lead.plain-intro,.hero .hero-sub{
+ background:linear-gradient(180deg,#f1d396 3%,#e3b15d 30%,#a66c2a 52%,#eac37c 68%,#b17a36 100%);
+ background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;
+ filter:drop-shadow(0 1px 0 #62320e) drop-shadow(0 2px 0 #351205) drop-shadow(0 3px 2px #110300);
+ }
+}
+.hero .hero-lead.plain-intro{font-size:clamp(15px,1.28vw,23px);margin-block:4px 8px}
+.hero .hero-sub{margin-block:0 10px}
+.hero .ornament{margin-bottom:6px}
+.hero .actions{margin-top:12px}
+.hero{padding-bottom:14px}
+.hero + .section{padding-top:10px}
+.hero + .section:before{margin-bottom:8px}
+.hero + .section .section-heading{margin-top:2px;margin-bottom:14px}
+@media(min-width:1200px){.hero .hero-lead.plain-intro{white-space:nowrap}}
+@media(max-width:650px){
+ .hero .hero-lead.plain-intro{font-size:clamp(15px,4vw,19px);margin-block:3px 8px;white-space:normal}
+ .hero .hero-sub{margin-bottom:8px}
+ .hero .actions{margin-top:10px;gap:10px}
+ .hero{padding-bottom:12px}
+ .hero + .section{padding-top:8px}
+}

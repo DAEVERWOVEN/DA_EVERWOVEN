@@ -263,3 +263,6 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 
 /* v18: optical adjustment for the round Ukrainian O; retain approved ruby palette. */
 .illuminated .dropcap img[src$="/041E.webp"],.illuminated .dropcap img[src$="/004F.webp"]{transform:translateY(-.16em)}
+
+/* v19: crisp, thin black silhouette contour on transparent illustrated initials. */
+.dropcap img{filter:drop-shadow(.65px 0 0 #080302) drop-shadow(-.65px 0 0 #080302) drop-shadow(0 .65px 0 #080302) drop-shadow(0 -.65px 0 #080302);}

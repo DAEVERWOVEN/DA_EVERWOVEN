@@ -348,3 +348,17 @@ html{scroll-padding-top:90px}
 @media(max-width:999px){
 .hero-lead.illuminated.centered-manuscript .dropcap{margin-inline-end:-.08em}
 }
+
+/* v33: keep the mobile initial attached to its first word, with the entire manuscript centered. */
+@media(max-width:999px){
+.hero-lead.illuminated.centered-manuscript{display:block;width:fit-content;max-width:100%;margin-inline:auto;text-align:center;text-wrap:wrap;white-space:normal}
+.hero-lead.illuminated.centered-manuscript .initial-word{display:inline-block;position:relative;padding-inline-start:2.05em;white-space:nowrap;text-align:left}
+.hero-lead.illuminated.centered-manuscript .initial-word .dropcap{position:absolute;float:none;display:block;left:-.23em;top:.48em;width:2.5em;height:2.55em;margin:0}
+.hero-lead.illuminated.centered-manuscript .lead-copy{display:inline;vertical-align:baseline}
+.hero-lead.illuminated.centered-manuscript{min-height:3.2em}
+}
+@media(min-width:1000px){
+.hero-lead.illuminated.centered-manuscript .initial-word{display:contents}
+}
+
+@media(min-width:1000px){.hero-lead.illuminated.centered-manuscript{display:block;text-align:center}.hero-lead.illuminated.centered-manuscript .initial-word{display:inline-block;position:relative;padding-inline-start:2.3em;white-space:nowrap}.hero-lead.illuminated.centered-manuscript .initial-word .dropcap{position:absolute;display:block;left:-.2em;top:.55em;margin:0}.hero-lead.illuminated.centered-manuscript .lead-copy{display:inline;vertical-align:baseline}.hero-lead.illuminated.centered-manuscript{min-height:3.1em}}

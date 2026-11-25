@@ -362,3 +362,26 @@ html{scroll-padding-top:90px}
 }
 
 @media(min-width:1000px){.hero-lead.illuminated.centered-manuscript{display:block;text-align:center}.hero-lead.illuminated.centered-manuscript .initial-word{display:inline-block;position:relative;padding-inline-start:2.3em;white-space:nowrap}.hero-lead.illuminated.centered-manuscript .initial-word .dropcap{position:absolute;display:block;left:-.2em;top:.55em;margin:0}.hero-lead.illuminated.centered-manuscript .lead-copy{display:inline;vertical-align:baseline}.hero-lead.illuminated.centered-manuscript{min-height:3.1em}}
+
+/* v34: mobile two-column manuscript: the capital has its own reserved space,
+   so its ornament cannot cover the next line. Keep requested first-line wording. */
+@media(max-width:999px){
+.hero-lead.illuminated.centered-manuscript{
+ display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;
+ width:fit-content;max-width:100%;margin-inline:auto;align-items:start;
+ column-gap:.06em;row-gap:0;text-align:center;white-space:normal;text-wrap:wrap;
+ font-size:clamp(11px,3.75vw,20px);line-height:1.55;min-height:0;
+}
+.hero-lead.illuminated.centered-manuscript .initial-word{display:contents;padding:0}
+.hero-lead.illuminated.centered-manuscript .initial-word .dropcap{
+ position:relative;grid-column:1;grid-row:1 / 3;left:auto;top:auto;
+ float:none;display:block;width:2.35em;height:2.55em;margin:.42em 0 0;
+}
+.hero-lead.illuminated.centered-manuscript .initial-word .lead-copy{
+ display:block;grid-column:2;grid-row:1;white-space:nowrap;text-align:left;
+}
+.hero-lead.illuminated.centered-manuscript > .lead-copy{
+ display:block;grid-column:2;grid-row:2;white-space:normal;text-align:center;text-wrap:balance;
+}
+}
+@media(max-width:340px){.hero-lead.illuminated.centered-manuscript .initial-word .lead-copy{white-space:normal}}

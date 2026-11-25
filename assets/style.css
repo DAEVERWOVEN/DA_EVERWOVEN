@@ -219,3 +219,15 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 
 /* Center the main feature section heading in both locales. */
 .section > .container > .section-heading{text-align:center;margin-inline:auto;}
+
+/* v11: same metallic gold as the document headings. */
+.hero-eyebrow{color:#e9bd71;text-shadow:0 -1px 0 #f4d99b,0 1px 0 #b17632,0 2px 0 #75421c,0 3px 2px #160300,0 4px 6px #000;}
+@supports (background-clip:text){.hero-eyebrow{background:linear-gradient(180deg,#f1d396 3%,#e3b15d 30%,#a66c2a 52%,#eac37c 68%,#b17a36 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 1px 0 #62320e) drop-shadow(0 2px 0 #351205) drop-shadow(0 3px 2px #110300);}}
+
+/* v12: symmetrical header controls, right-aligned with viewport breathing room. */
+.header-inner{max-width:none;width:100%;padding-inline:clamp(22px,3.1vw,62px);gap:16px}
+@media(min-width:1101px){.header-inner{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}.header-inner>.brand{justify-self:start}.header-inner>.desktop-nav{justify-self:center}.header-inner>.header-end{justify-self:end;margin-left:0}}
+@media(min-width:651px) and (max-width:1100px){.header-inner{display:flex;flex-wrap:wrap;justify-content:space-between}.header-inner>.header-end{margin-left:auto}.header-inner>.desktop-nav{order:3;justify-content:center;flex-basis:100%}}
+.header-end>.audio-toggle,.header-end>.lang{width:var(--control-width);min-width:var(--control-width);max-width:var(--control-width);height:var(--control-height);min-height:var(--control-height);max-height:var(--control-height);flex:0 0 var(--control-width);box-sizing:border-box}
+@media(max-width:650px){.header-inner{padding-inline:10px;gap:8px}.header-inner>.header-end{margin-left:auto;justify-content:flex-end}}
+@media(max-width:420px){.header-inner>.header-end{width:100%;justify-content:flex-end}}

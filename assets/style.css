@@ -297,3 +297,6 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 /* v24: center both heading and each text line of the about introduction only. */
 .interior-hero.about-intro>.container{text-align:center}
 .interior-hero.about-intro h1,.interior-hero.about-intro p{text-align:center;margin-inline:auto}
+
+/* v25: give the opening manuscript enough room for the unbroken franchise name. */
+@media(min-width:1000px){.hero-lead.illuminated.centered-manuscript{width:min(100%,820px);max-width:820px}}

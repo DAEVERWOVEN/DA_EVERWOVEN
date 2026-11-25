@@ -398,3 +398,6 @@ html{scroll-padding-top:90px}
 .hero-lead.illuminated.centered-manuscript:lang(uk){grid-template-columns:auto minmax(0,1fr);width:100%}
 .hero-lead.illuminated.centered-manuscript:lang(uk) > .lead-copy{width:auto;min-width:0}
 }
+
+/* v36: tighten desktop opening capital by 0.20em; preserve approved mobile layout. */
+@media(min-width:1000px){.hero-lead.illuminated.centered-manuscript .initial-word{padding-inline-start:2.10em}}

@@ -312,3 +312,9 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 /* v27: intact inline brand in terms, with the existing subtitle's metallic gold. */
 .doc-wrap .inline-brand{color:#e9bd71;font-weight:700;white-space:nowrap;text-shadow:0 -1px 0 #f4d99b,0 1px 0 #b17632,0 2px 0 #75421c,0 3px 2px #160300,0 4px 6px #000}
 @supports (background-clip:text){.doc-wrap .inline-brand{background:linear-gradient(180deg,#f1d396 3%,#e3b15d 30%,#a66c2a 52%,#eac37c 68%,#b17a36 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 1px 0 #62320e) drop-shadow(0 2px 0 #351205) drop-shadow(0 3px 2px #110300)}}
+
+/* v28: consistent embossed metallic gold for all contact email links. */
+a[href="mailto:dauniversebook@gmail.com"]{color:#e9bd71;font-weight:700;text-shadow:0 -1px 0 #f4d99b,0 1px 0 #b17632,0 2px 0 #75421c,0 3px 2px #160300,0 4px 6px #000;text-decoration-color:#b17a36}
+@supports (background-clip:text){a[href="mailto:dauniversebook@gmail.com"]{background:linear-gradient(180deg,#f1d396 3%,#e3b15d 30%,#a66c2a 52%,#eac37c 68%,#b17a36 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 1px 0 #62320e) drop-shadow(0 2px 0 #351205) drop-shadow(0 3px 2px #110300)}}
+a[href="mailto:dauniversebook@gmail.com"]:hover{filter:brightness(1.18) drop-shadow(0 1px 0 #62320e)}
+a[href="mailto:dauniversebook@gmail.com"]:focus-visible{outline:1px solid #e3b15d;outline-offset:3px}

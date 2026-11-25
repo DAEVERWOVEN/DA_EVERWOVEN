@@ -283,3 +283,8 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 .header-end>.lang a:focus-visible,.header-end>.audio-toggle:focus-visible{outline:2px solid #ffe0a1;outline-offset:5px}
 @media(max-width:650px){.header-end{gap:13px}.header-end>.audio-toggle::after,.header-end>.lang::after{inset:-3px;border-width:9px}.header-end>.lang{padding:4px 5px;gap:3px}.header-end>.audio-toggle{padding:4px 5px}.header-end>.lang a{padding:1px 2px;gap:2px}}
 @media(max-width:380px){.header-end{gap:11px}.header-end>.lang{padding-inline:4px}.header-end>.lang a{padding-inline:1px}}
+
+/* v22: active language is crimson; inactive language is black obsidian. */
+.header-end>.lang{background:url("obsidian_texture.webp") center/cover!important}
+.header-end>.lang a:not([aria-current="true"]){background:linear-gradient(#08050415,#08050430),url("obsidian_texture.webp") center/cover!important;color:#edc37f}
+.header-end>.lang a[aria-current="true"]{background:linear-gradient(#b51d0920,#62080030),url("blood_texture.webp") center/cover!important;color:#ffe0a1}

@@ -59,6 +59,8 @@ detectLatestPublicApk();
  audio.addEventListener('error',()=>{playing=false;reflect();});
  document.addEventListener('pointerdown',e=>{if(!e.target.closest('[data-audio-toggle]')&&wanted&&!playing)start();},{capture:true});
  document.addEventListener('keydown',e=>{if(!e.target.closest('[data-audio-toggle]')&&wanted&&!playing)start();},{capture:true});
+ function prepareCaps(scope=document){scope.querySelectorAll('.dropcap img').forEach(img=>{const cap=img.closest('.dropcap');const show=()=>{if(img.naturalWidth>0)cap.classList.add('cap-ready');};if(img.complete)show();else img.addEventListener('load',show,{once:true});img.addEventListener('error',()=>cap.classList.remove('cap-ready'),{once:true});});}
+ prepareCaps();
  reflect();start();
  // Only the page shell is swapped. The audio element never leaves the document.
  async function navigate(destination,addHistory){const url=new URL(destination,location.href);if(pending)pending.abort();const ctl=new AbortController();pending=ctl;try{
@@ -67,7 +69,7 @@ detectLatestPublicApk();
  if(addHistory)history.pushState({daUniverse:true},'',url.href);
  current.replaceWith(next);document.title=doc.title;document.documentElement.lang=doc.documentElement.lang;
  const sel='link[rel="canonical"],link[hreflang],meta[name="description"],meta[property^="og:"],meta[name^="twitter:"],script[type="application/ld+json"]';document.head.querySelectorAll(sel).forEach(e=>e.remove());doc.head.querySelectorAll(sel).forEach(e=>document.head.append(document.importNode(e,true)));
- window.scrollTo(0,0);reflect();detectLatestPublicApk();
+ prepareCaps(next);if(url.hash){let target;try{target=document.getElementById(decodeURIComponent(url.hash.slice(1)));}catch(_){}if(target)target.scrollIntoView({behavior:'instant',block:'start'});else window.scrollTo(0,0);}else window.scrollTo(0,0);reflect();detectLatestPublicApk();
  }catch(e){if(e.name!=='AbortError')location.assign(url.href);}finally{if(pending===ctl)pending=null;}}
  history.scrollRestoration='manual';
  document.addEventListener('click',e=>{const b=e.target.closest('[data-audio-toggle]');if(b){e.preventDefault();if(playing)stop();else{wanted=true;start();}return;}

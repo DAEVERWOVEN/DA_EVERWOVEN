@@ -185,3 +185,6 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 .ornate-btn::before,.ornate-btn::after,.feature-link::before,.feature-link::after,.section::before,.statement::before,.interior-hero::after,body::before{pointer-events:none!important}
 .hero-content{z-index:3}.actions{position:relative;z-index:4}
 @media(prefers-reduced-motion:reduce){.feature-link{transition:none}}
+
+/* v6: centered plaque headings; preserve manuscript alignment. */
+.feature-card h3{text-align:center; margin-left:auto; margin-right:auto; width:100%;}

@@ -318,3 +318,7 @@ a[href="mailto:dauniversebook@gmail.com"]{color:#e9bd71;font-weight:700;text-sha
 @supports (background-clip:text){a[href="mailto:dauniversebook@gmail.com"]{background:linear-gradient(180deg,#f1d396 3%,#e3b15d 30%,#a66c2a 52%,#eac37c 68%,#b17a36 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 1px 0 #62320e) drop-shadow(0 2px 0 #351205) drop-shadow(0 3px 2px #110300)}}
 a[href="mailto:dauniversebook@gmail.com"]:hover{filter:brightness(1.18) drop-shadow(0 1px 0 #62320e)}
 a[href="mailto:dauniversebook@gmail.com"]:focus-visible{outline:1px solid #e3b15d;outline-offset:3px}
+
+/* v29: Google Drive permission identifier in matching embossed metallic gold. */
+.doc-wrap .gold-scope{font-weight:700;color:#e9bd71;overflow-wrap:anywhere;text-shadow:0 -1px 0 #f4d99b,0 1px 0 #b17632,0 2px 0 #75421c,0 3px 2px #160300,0 4px 6px #000}
+@supports (background-clip:text){.doc-wrap .gold-scope{background:linear-gradient(180deg,#f1d396 3%,#e3b15d 30%,#a66c2a 52%,#eac37c 68%,#b17a36 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 1px 0 #62320e) drop-shadow(0 2px 0 #351205) drop-shadow(0 3px 2px #110300)}}

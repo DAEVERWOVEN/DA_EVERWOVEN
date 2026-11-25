@@ -245,3 +245,9 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 /* v15: more legible gamebook subtitle, with the existing metallic gold finish. */
 .hero-eyebrow{font-size:18px;line-height:1.35;}
 @media(max-width:650px){.hero-eyebrow{font-size:15px;letter-spacing:.1em;}}
+
+/* v16: ruby letter faces, original ornament; approved metallic wordmark with moving reflection only. */
+.brand .brand-wordmark img{animation:none;filter:none;}
+.brand .brand-wordmark::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 42%,#fff4c540 48%,#fff3d2e0 50%,#fff4c540 52%,transparent 58%);background-size:300% 100%;background-position:100% 0;mask:url("brand-gold-rubies-v2.webp") center/100% 100% no-repeat;-webkit-mask:url("brand-gold-rubies-v2.webp") center/100% 100% no-repeat;opacity:0;animation:wordmark-sweep 7s ease-in-out infinite;}
+@keyframes wordmark-sweep{0%,65%{background-position:100% 0;opacity:0}68%{opacity:.85}90%{background-position:0 0;opacity:.85}94%,100%{background-position:0 0;opacity:0}}
+@media(prefers-reduced-motion:reduce){.brand .brand-wordmark::after{animation:none;opacity:0}}

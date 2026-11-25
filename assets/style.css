@@ -339,3 +339,12 @@ a[href="mailto:dauniversebook@gmail.com"]:focus-visible{outline:1px solid #e3b15
 html{scroll-padding-top:90px}
 @media(max-width:1100px){html{scroll-padding-top:145px}}
 @media(max-width:650px){html{scroll-padding-top:150px}}
+
+/* v32: optical kerning between the illustrated A and its following lowercase letter. */
+@media(min-width:1000px){
+.hero-lead.illuminated.centered-manuscript{width:fit-content;max-width:100%;margin-inline:auto;justify-content:center}
+.hero-lead.illuminated.centered-manuscript .dropcap{margin-inline-end:-.20em}
+}
+@media(max-width:999px){
+.hero-lead.illuminated.centered-manuscript .dropcap{margin-inline-end:-.08em}
+}

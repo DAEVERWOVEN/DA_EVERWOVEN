@@ -219,3 +219,11 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 
 /* Center the main feature section heading in both locales. */
 .section > .container > .section-heading{text-align:center;margin-inline:auto;}
+
+/* v11: same metallic gold as the document headings. */
+.hero-eyebrow{color:#e9bd71;text-shadow:0 -1px 0 #f4d99b,0 1px 0 #b17632,0 2px 0 #75421c,0 3px 2px #160300,0 4px 6px #000;}
+@supports (background-clip:text){.hero-eyebrow{background:linear-gradient(180deg,#f1d396 3%,#e3b15d 30%,#a66c2a 52%,#eac37c 68%,#b17a36 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 1px 0 #62320e) drop-shadow(0 2px 0 #351205) drop-shadow(0 3px 2px #110300);}}
+
+/* v12: original supplied illuminated initials; preserve natural color and top alignment. */
+.illuminated .dropcap,.hero-lead.illuminated .dropcap,.statement .dropcap,.doc-wrap .illuminated .dropcap{margin-top:.42em;margin-right:.23em;margin-bottom:.02em;height:2.55em;filter:none;}
+.dropcap img{object-fit:contain;object-position:center top;filter:none;}

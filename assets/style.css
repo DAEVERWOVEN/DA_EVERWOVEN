@@ -439,3 +439,12 @@ html{scroll-padding-top:90px}
 /* v39: bold metallic gold labels on the two main action buttons; retain the separate crimson fill and ruby frame. */
 .hero .actions .ornate-btn .action-label{font-weight:800;color:#e9bd71;text-shadow:0 -1px 0 #f4d99b,0 1px 0 #b17632,0 2px 0 #75401c,0 3px 2px #160300,0 4px 6px #000}
 @supports (background-clip:text){.hero .actions .ornate-btn .action-label{background:linear-gradient(180deg,#f1d396 3%,#e3b15d 30%,#a66c2a 52%,#eac37c 68%,#b17a36 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 1px 0 #62320e) drop-shadow(0 2px 0 #351205) drop-shadow(0 3px 2px #110300)}}
+
+/* v40: geometrically identical, centered main action frames, including hover state. */
+.hero .actions{display:grid;grid-template-columns:repeat(2,minmax(0,330px));grid-auto-rows:64px;gap:20px;box-sizing:border-box;width:min(100%,680px);max-width:680px;margin-inline:auto;justify-content:center;justify-items:stretch;align-items:stretch}
+.hero .actions > a.ornate-btn{display:flex;box-sizing:border-box;width:100%;height:64px;min-width:0;min-height:64px;max-width:none;max-height:64px;margin:0;padding:8px 16px;align-items:center;justify-content:center;text-align:center;transform:none}
+.hero .actions > a.ornate-btn:before{inset:5px 6px}
+.hero .actions > a.ornate-btn:after{inset:0;border-width:17px}
+.hero .actions > a.ornate-btn:hover,.hero .actions > a.ornate-btn:active{transform:none}
+.hero .actions .action-label{display:block;max-width:100%;line-height:1.2;letter-spacing:normal}
+@media(max-width:650px){.hero .actions{grid-template-columns:minmax(0,1fr);grid-auto-rows:64px;width:min(100%,370px);max-width:370px;gap:10px}.hero .actions > a.ornate-btn{padding-inline:10px}.hero .actions .action-label{font-size:clamp(14px,4.2vw,18px)}}

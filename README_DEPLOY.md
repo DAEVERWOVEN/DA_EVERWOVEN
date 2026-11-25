@@ -1,4 +1,4 @@
-# DA UNIVERSE — THE ASHEN ATLAS (website)
+# DA EVERWOVEN — WHERE THE AGES LIE ENTWINED (website)
 
 A ready-to-publish, no-dependencies multilingual static website.
 
@@ -47,14 +47,14 @@ Publishing this website **does not automatically switch OAuth to `In production`
 Non-commercial, independent fan work; not endorsed by EA / BioWare.
 
 ## Crimson leather edition — 2026-11-25
-- Deploy to the existing repository `dauniversebook/DA_UNIVERSE` on its configured Pages branch.
+- Deploy to the existing repository `DAEVERWOVEN/DA_EVERWOVEN` on its configured Pages branch.
 - Delete the obsolete language directory from the live repository when deploying; uploading the new files alone will not remove obsolete files on the server.
 - Preserve any repository-specific Google verification files not present in this archive.
 - Includes the approved leather background, original game frame/divider textures, lute, illuminated initials and bundled original soundtrack.
 - Public download and Drive folder links are unchanged.
 
 ## Search indexing
-- Add the URL-prefix property https://dauniversebook.github.io/DA_UNIVERSE/ in Google Search Console.
+- Add the URL-prefix property https://daeverwoven.github.io/DA_EVERWOVEN/ in Google Search Console.
 - Verify ownership and submit `sitemap.xml`. Request indexing of the home page and download page after deployment.
 - Sitemap lists ten canonical URLs, with Ukrainian/English alternates; `/uk/` duplicates point to the Ukrainian canonical root pages.
 - Project-level robots.txt is included; host-root robots.txt is controlled by the GitHub Pages host.

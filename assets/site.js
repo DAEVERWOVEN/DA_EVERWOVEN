@@ -1,5 +1,5 @@
 "use strict";
-/* DA UNIVERSE - public website music and download support.
+/* DA EVERWOVEN - public website music and download support.
    This website does not authenticate visitors with Google.
    An API key is optional; when supplied it must be browser-referrer restricted
    and API restricted to Google Drive API.

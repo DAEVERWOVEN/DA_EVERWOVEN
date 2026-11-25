@@ -1,4 +1,4 @@
-/* DA UNIVERSE — The Ashen Atlas. Static website. No external fonts or trackers. */
+/* DA EVERWOVEN — The Ashen Atlas. Static website. No external fonts or trackers. */
 :root{color-scheme:dark;--ink:#0a070c;--ink2:#171019;--surface:#20111a;--maroon:#4e0d16;--red:#94151e;--gold:#f1c980;--gold2:#a9743f;--white:#f9eee1;--muted:#d6bea6;--line:rgba(235,181,101,.36);--max:1190px;--radius:12px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% 10%,#3b1121 0%,#130b11 39%,#09070a 72%);font-family:Georgia,'Times New Roman',serif;color:var(--white);line-height:1.65}a{color:inherit}a:hover{color:var(--gold)}img{max-width:100%}button,a{ -webkit-tap-highlight-color:transparent }button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #ffe7ad;outline-offset:4px}::selection{background:#9e542b;color:#fff}
 .page-shell{overflow:hidden;min-height:100vh;position:relative}.page-shell:before{content:"";pointer-events:none;position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(243,160,109,.025) 1px,transparent 1px),linear-gradient(0deg,rgba(243,160,109,.018) 1px,transparent 1px);background-size:47px 47px;mask-image:linear-gradient(to bottom,black,transparent 96%)}
@@ -25,7 +25,7 @@
 @media(max-width:650px){.header-inner{flex-wrap:wrap;min-height:68px}.header-end{margin-left:auto;gap:5px}.audio-toggle{padding:5px 6px;font-size:.61rem;min-height:32px}.audio-toggle .music-icon{font-size:.88rem}.brand strong{font-size:.76rem}.brand small{font-size:.44rem}.creator-credit--hero{margin:-8px auto 12px}.download-actions{max-width:100%}}
 @media(max-width:380px){.header-inner{padding:8px 9px}.brand img{width:31px;height:31px}.brand{gap:5px}.lang a{padding:5px 4px;font-size:.58rem}.audio-toggle{padding:5px;font-size:.55rem}}
 
-/* DA UNIVERSE - crimson leather edition. Original game assets; no external requests. */
+/* DA EVERWOVEN - crimson leather edition. Original game assets; no external requests. */
 @font-face{font-family:Atlas;src:url("EBGaramond-Medium.ttf") format("truetype");font-display:swap;font-weight:400 600}
 :root{--ink:#100605;--surface:#160c0a;--gold:#e8c17c;--gold2:#ad7634;--white:#f0e2c8;--muted:#d8c0a0;--line:#a57735;--max:1190px}
 html{background:#170301}body{font-family:Atlas,Georgia,serif;font-size:19px;color:#f0e2c8;background:#280604 url("dragon-leather.webp") center center/cover fixed no-repeat;line-height:1.6}
@@ -314,10 +314,10 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 @supports (background-clip:text){.doc-wrap .inline-brand{background:linear-gradient(180deg,#f1d396 3%,#e3b15d 30%,#a66c2a 52%,#eac37c 68%,#b17a36 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 1px 0 #62320e) drop-shadow(0 2px 0 #351205) drop-shadow(0 3px 2px #110300)}}
 
 /* v28: consistent embossed metallic gold for all contact email links. */
-a[href="mailto:dauniversebook@gmail.com"]{color:#e9bd71;font-weight:700;text-shadow:0 -1px 0 #f4d99b,0 1px 0 #b17632,0 2px 0 #75421c,0 3px 2px #160300,0 4px 6px #000;text-decoration-color:#b17a36}
-@supports (background-clip:text){a[href="mailto:dauniversebook@gmail.com"]{background:linear-gradient(180deg,#f1d396 3%,#e3b15d 30%,#a66c2a 52%,#eac37c 68%,#b17a36 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 1px 0 #62320e) drop-shadow(0 2px 0 #351205) drop-shadow(0 3px 2px #110300)}}
-a[href="mailto:dauniversebook@gmail.com"]:hover{filter:brightness(1.18) drop-shadow(0 1px 0 #62320e)}
-a[href="mailto:dauniversebook@gmail.com"]:focus-visible{outline:1px solid #e3b15d;outline-offset:3px}
+a[href="mailto:daeverwoven@gmail.com"]{color:#e9bd71;font-weight:700;text-shadow:0 -1px 0 #f4d99b,0 1px 0 #b17632,0 2px 0 #75421c,0 3px 2px #160300,0 4px 6px #000;text-decoration-color:#b17a36}
+@supports (background-clip:text){a[href="mailto:daeverwoven@gmail.com"]{background:linear-gradient(180deg,#f1d396 3%,#e3b15d 30%,#a66c2a 52%,#eac37c 68%,#b17a36 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 1px 0 #62320e) drop-shadow(0 2px 0 #351205) drop-shadow(0 3px 2px #110300)}}
+a[href="mailto:daeverwoven@gmail.com"]:hover{filter:brightness(1.18) drop-shadow(0 1px 0 #62320e)}
+a[href="mailto:daeverwoven@gmail.com"]:focus-visible{outline:1px solid #e3b15d;outline-offset:3px}
 
 /* v29: Google Drive permission identifier in matching embossed metallic gold. */
 .doc-wrap .gold-scope{font-weight:700;color:#e9bd71;overflow-wrap:anywhere;text-shadow:0 -1px 0 #f4d99b,0 1px 0 #b17632,0 2px 0 #75421c,0 3px 2px #160300,0 4px 6px #000}

@@ -235,3 +235,9 @@ html{background:#280403}body{position:relative;isolation:isolate;background:none
 /* v13: original supplied illuminated initials; preserve natural color and top alignment. */
 .illuminated .dropcap,.hero-lead.illuminated .dropcap,.statement .dropcap,.doc-wrap .illuminated .dropcap{margin-top:.42em;margin-right:.23em;margin-bottom:.02em;height:2.55em;filter:none;}
 .dropcap img{object-fit:contain;object-position:center top;filter:none;}
+
+/* v14: crimson texture for both language options. */
+.header-end>.lang{background:linear-gradient(#8d19083b,#4c0706a8),url("blood_texture.webp") center/cover;}
+.header-end>.lang a{background:transparent;color:#edc37f;box-shadow:inset 0 0 0 1px transparent;}
+.header-end>.lang a[aria-current=true]{background:linear-gradient(#bc321b33,#35050244);box-shadow:inset 0 0 0 1px #edbb68,0 1px 3px #230400;}
+.header-end>.lang a:hover{background-color:#bf4c252e;}

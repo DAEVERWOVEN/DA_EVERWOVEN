@@ -431,3 +431,7 @@ html{scroll-padding-top:90px}
  .hero{padding-bottom:12px}
  .hero + .section{padding-top:8px}
 }
+
+/* v38: identical typography for the two centered homepage introduction paragraphs. */
+.hero .hero-lead.plain-intro,.hero .hero-sub{font-family:Atlas,Georgia,serif;font-size:clamp(15px,1.28vw,23px);font-weight:inherit;line-height:1.45;letter-spacing:normal}
+@media(max-width:650px){.hero .hero-lead.plain-intro,.hero .hero-sub{font-size:clamp(15px,4vw,19px);line-height:1.45;white-space:normal}}

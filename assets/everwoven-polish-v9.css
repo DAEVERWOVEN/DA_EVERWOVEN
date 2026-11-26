@@ -71,3 +71,27 @@
  .hero .hero-lead.plain-intro,.hero .hero-sub{font-size:clamp(15px,4vw,19px);line-height:1.42}
  .hero .actions{margin-top:8px}
 }
+
+/* v11: homepage text uses the exact yellow-metal palette and relief of the approved APK/More buttons.
+   Repeat the gradient per line, not over the entire paragraph, including on narrow mobile screens. */
+.hero .hero-content{
+ --hero-polished-gold:linear-gradient(180deg,#ffe6a1 0%,#f9ce69 23%,#d99b2d 46%,#ad6c13 51%,#f2be4e 64%,#ffe39a 79%,#c68a24 100%);
+ --hero-gold-relief:drop-shadow(0 1px 0 #80430a) drop-shadow(0 2px 0 #482005) drop-shadow(0 3px 2px #160200);
+}
+.hero .hero-eyebrow,.hero .hero-lead.plain-intro,.hero .hero-sub{
+ color:#eab444;background:none;-webkit-text-fill-color:currentColor;
+ text-shadow:0 1px 0 #a36714,0 2px 1px #502405,0 3px 3px #160200;
+ filter:none;-webkit-text-stroke:0;
+}
+@supports ((background-clip:text) or (-webkit-background-clip:text)){
+ .hero .hero-eyebrow,.hero .hero-lead.plain-intro,.hero .hero-sub{
+  background-image:var(--hero-polished-gold);
+  background-size:100% 1.42em;background-size:100% 1lh;
+  background-repeat:repeat-y;background-position:0 0;
+  background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-shadow:none;filter:var(--hero-gold-relief);
+ }
+ .hero .hero-eyebrow{background-size:100% 1.18em;background-size:100% 1lh}
+ .hero .actions > a.blood-btn .action-label{background-image:var(--hero-polished-gold);filter:var(--hero-gold-relief)}
+ @media(max-width:650px){.hero .hero-eyebrow{background-size:100% 1.2em;background-size:100% 1lh}}
+}

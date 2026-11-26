@@ -1,0 +1,9 @@
+/* Carved Everwoven header art; independent of the app icon and hero panorama. */
+.brand .brand-wordmark{--everwoven-art:url("brand-everwoven-carved-v3.webp");width:clamp(185px,17vw,256px)}
+.brand .brand-wordmark img{display:block;width:100%;height:auto;aspect-ratio:1200/372;object-fit:contain;animation:none!important;filter:drop-shadow(0 2px 3px #160000)}
+@supports ((mask-image:url("brand-everwoven-carved-v3.webp")) or (-webkit-mask-image:url("brand-everwoven-carved-v3.webp"))){
+.brand .brand-wordmark::after{content:"";display:block;position:absolute;inset:0;pointer-events:none;background:linear-gradient(112deg,transparent 39%,#d98c2b00 44%,#ffd26d35 47%,#ffe6a6b5 50%,#edaa4055 53%,transparent 61%);background-size:320% 100%;background-position:100% 0;mask:url("brand-everwoven-carved-v3.webp") center/100% 100% no-repeat;-webkit-mask:url("brand-everwoven-carved-v3.webp") center/100% 100% no-repeat;mix-blend-mode:screen;opacity:0;animation:everwoven-carved-glide 6.8s ease-in-out infinite}
+}
+@keyframes everwoven-carved-glide{0%,46%{background-position:100% 0;opacity:0}51%{opacity:.85}78%{background-position:0 0;opacity:.85}83%,100%{background-position:0 0;opacity:0}}
+@media(max-width:650px){.brand .brand-wordmark{width:clamp(106px,30vw,175px)}}
+@media(prefers-reduced-motion:reduce){.brand .brand-wordmark::after{animation:none!important;opacity:0}}

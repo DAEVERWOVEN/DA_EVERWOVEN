@@ -144,3 +144,12 @@
  .mobile-menu .menu-gold-rails>i{height:2.5px}
  .mobile-menu .menu-gold-rails{gap:3px}
 }
+
+/* v15: one immutable icon image, independent of language and browser text/gradient layout. */
+@media(max-width:930px){
+ .header-end>.mobile-menu>summary>img.menu-gold-icon{
+  display:block;flex:none;width:54%;height:auto;aspect-ratio:1;max-width:28px;
+  margin:0;padding:0;border:0;border-radius:0;box-shadow:none;
+  object-fit:contain;filter:none;transform:none;pointer-events:none;
+ }
+}

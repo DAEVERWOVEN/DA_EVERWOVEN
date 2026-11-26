@@ -95,3 +95,52 @@
  .hero .actions > a.blood-btn .action-label{background-image:var(--hero-polished-gold);filter:var(--hero-gold-relief)}
  @media(max-width:650px){.hero .hero-eyebrow{background-size:100% 1.2em;background-size:100% 1lh}}
 }
+
+/* v14: use the approved polished gold for all header control captions.
+   The ruby frame, stone/blood fills, flags and music behaviour remain independent. */
+.site-header{
+ --header-polished-gold:linear-gradient(180deg,#ffe6a1 0%,#f9ce69 23%,#d99b2d 46%,#ad6c13 51%,#f2be4e 64%,#ffe39a 79%,#c68a24 100%);
+ --header-gold-relief:drop-shadow(0 1px 0 #80430a) drop-shadow(0 2px 0 #482005) drop-shadow(0 3px 2px #160200);
+}
+.site-header .audio-toggle [data-audio-state],.site-header .lang a > span{
+ display:inline-block;white-space:nowrap;font-family:AtlasAction,Atlas,Georgia,serif;font-weight:900;font-synthesis:weight;
+ color:#eab444;background:none;-webkit-text-fill-color:currentColor;-webkit-text-stroke:0;
+ text-shadow:0 1px 0 #a36714,0 2px 1px #502405,0 3px 3px #160200;
+}
+@supports ((background-clip:text) or (-webkit-background-clip:text)){
+ .site-header .audio-toggle [data-audio-state],.site-header .lang a > span{
+  background-image:var(--header-polished-gold);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-shadow:none;filter:var(--header-gold-relief);
+ }
+}
+/* Same original ruby frame and blood texture as the adjacent controls.
+   Three fine raised gold rails use the same metallic colors as the frame. */
+@media(max-width:930px){
+ .header-end>.mobile-menu{flex:0 0 auto;position:relative}
+ .header-end>.mobile-menu>summary{
+  position:relative;isolation:isolate;box-sizing:border-box;display:flex;align-items:center;justify-content:center;
+  width:var(--control-height);height:var(--control-height);min-height:var(--control-height);max-height:var(--control-height);
+  padding:0;margin:0;border:0;border-radius:5px;box-shadow:none;overflow:visible;list-style:none;
+  background:linear-gradient(#8d19083b,#4c0706a8),url("blood_texture.webp") center/cover;
+ }
+ .header-end>.mobile-menu>summary::marker{content:""}
+ .header-end>.mobile-menu>summary::-webkit-details-marker{display:none}
+ .header-end>.mobile-menu>summary::after{
+  content:"";position:absolute;inset:-4px;z-index:2;border:12px solid transparent;
+  border-image:url("frame_control_2_sides.webp") 120 160 120 160 stretch;
+  pointer-events:none;filter:drop-shadow(0 2px 1px #160300);
+ }
+ .mobile-menu .menu-gold-rails{width:50%;display:flex;flex-direction:column;gap:3px;align-items:stretch;pointer-events:none}
+ .mobile-menu .menu-gold-rails>i{
+  display:block;height:3px;border-radius:1px;
+  background:linear-gradient(180deg,#ffe6a1 0%,#f9ce69 24%,#e0a33f 44%,#ad6c13 53%,#f2be4e 71%,#c68a24 100%);
+  box-shadow:0 1px 0 #80430a,0 2px 1px #482005,0 3px 2px #160200;
+ }
+ .header-end>.mobile-menu>summary:focus-visible{outline:2px solid #ffe0a1;outline-offset:5px}
+ .header-end>.mobile-menu>.mobile-dropdown{top:calc(var(--control-height) + 9px)}
+}
+@media(max-width:650px){
+ .header-end>.mobile-menu>summary::after{inset:-3px;border-width:9px}
+ .mobile-menu .menu-gold-rails>i{height:2.5px}
+ .mobile-menu .menu-gold-rails{gap:3px}
+}

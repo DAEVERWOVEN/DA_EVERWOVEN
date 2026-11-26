@@ -54,19 +54,17 @@ detectLatestPublicApk();
  function reflect(){const b=toggle();if(!b)return;const l=b.querySelector('[data-audio-state]');const audible=playing&&!audio.paused&&!audio.ended;b.setAttribute('aria-pressed',String(audible));b.classList.toggle('audio-toggle--on',audible);b.dataset.playback=audible?'on':'off';if(l)l.textContent=audible?b.dataset.textOn:b.dataset.textOff;b.title=b.getAttribute('aria-label');}
  audio.volume=.5;audio.loop=false;audio.preload='auto';audio.autoplay=true;
  if(audio.src!==tracks[0])audio.src=tracks[0];
- playing=!audio.paused&&!audio.ended;
+ // The playing event or successful play() promise confirms actual playback.
+ playing=false;
  function started(){if(!wanted){audio.pause();return;}const first=!playing;playing=true;blocked=false;reflect();if(first)getTrack((idx+1)%tracks.length).catch(()=>{});}
  audio.addEventListener('playing',started);
- async function start(){if(!wanted||playing||changing)return;const attempt=++seq;try{await audio.play();if(!wanted){audio.pause();return;}started();}catch(err){if(attempt===seq&&wanted&&!playing){blocked=err?.name==='NotAllowedError';reflect();}}}
+ async function start(){if(!wanted||playing||changing)return;const attempt=++seq;try{await audio.play();if(!wanted){audio.pause();return;}started();}catch(err){if(attempt===seq&&wanted&&!playing){blocked=err?.name==='NotAllowedError';if(blocked){wanted=false;audio.autoplay=false;audio.pause();}reflect();}}}
  function stop(){wanted=false;++seq;audio.autoplay=false;audio.pause();playing=false;blocked=false;reflect();}
  audio.addEventListener('ended',async()=>{playing=false;reflect();changing=true;idx=(idx+1)%tracks.length;try{audio.src=await getTrack(idx);changing=false;if(wanted)start();}catch(_){changing=false;reflect();}});
  audio.addEventListener('error',()=>{playing=false;reflect();});
  audio.addEventListener('pause',()=>{if(!audio.ended){playing=false;reflect();}});
- // Run play() directly in a trusted activation; touch pointerdown alone may not unlock audio.
- const resumeOnGesture=e=>{if(!e.isTrusted||!wanted||playing||e.target?.closest?.('[data-audio-toggle]'))return;if(e.type==='pointerdown'&&e.pointerType!=='mouse')return;start();};
- for(const type of ['pointerdown','pointerup','touchend','click','keydown'])document.addEventListener(type,resumeOnGesture,{capture:true,passive:true});
- window.addEventListener('pageshow',()=>{if(wanted&&!playing)start();});
- document.addEventListener('visibilitychange',()=>{if(!document.hidden&&wanted&&!playing)start();});
+ // A blocked autoplay is retried only through the explicit music toggle.
+ // Ordinary page clicks, touches, keys and visibility changes never start music.
  function prepareCaps(scope=document){scope.querySelectorAll('.dropcap img').forEach(img=>{const cap=img.closest('.dropcap');const show=()=>{if(img.naturalWidth>0)cap.classList.add('cap-ready');};if(img.complete)show();else img.addEventListener('load',show,{once:true});img.addEventListener('error',()=>cap.classList.remove('cap-ready'),{once:true});});}
  prepareCaps();
  reflect();start();

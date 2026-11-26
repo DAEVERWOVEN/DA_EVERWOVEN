@@ -51,7 +51,7 @@ detectLatestPublicApk();
  async function getTrack(i){if(tracks[i])return tracks[i];const files=parts[String(i+1)];const buffers=await Promise.all(files.map(async p=>{const r=await fetch(new URL(p,assetRoot));if(!r.ok)throw Error('Audio part unavailable');return r.arrayBuffer();}));return tracks[i]=URL.createObjectURL(new Blob(buffers,{type:'audio/mpeg'}));}
  let wanted=true,playing=false,idx=0,seq=0,pending=null,blocked=false,changing=false;
  const toggle=()=>document.querySelector('[data-audio-toggle]');
- function reflect(){const b=toggle();if(!b)return;const l=b.querySelector('[data-audio-state]');b.setAttribute('aria-pressed',String(wanted));b.classList.toggle('audio-toggle--on',wanted);b.dataset.playback=wanted?'on':'off';if(l)l.textContent=wanted?b.dataset.textOn:b.dataset.textOff;b.title=b.getAttribute('aria-label');}
+ function reflect(){const b=toggle();if(!b)return;const l=b.querySelector('[data-audio-state]');const audible=playing&&!audio.paused&&!audio.ended;b.setAttribute('aria-pressed',String(audible));b.classList.toggle('audio-toggle--on',audible);b.dataset.playback=audible?'on':'off';if(l)l.textContent=audible?b.dataset.textOn:b.dataset.textOff;b.title=b.getAttribute('aria-label');}
  audio.volume=.5;audio.loop=false;audio.preload='auto';audio.autoplay=true;
  if(audio.src!==tracks[0])audio.src=tracks[0];
  playing=!audio.paused&&!audio.ended;
@@ -59,11 +59,12 @@ detectLatestPublicApk();
  audio.addEventListener('playing',started);
  async function start(){if(!wanted||playing||changing)return;const attempt=++seq;try{await audio.play();if(!wanted){audio.pause();return;}started();}catch(err){if(attempt===seq&&wanted&&!playing){blocked=err?.name==='NotAllowedError';reflect();}}}
  function stop(){wanted=false;++seq;audio.autoplay=false;audio.pause();playing=false;blocked=false;reflect();}
- audio.addEventListener('ended',async()=>{playing=false;changing=true;idx=(idx+1)%tracks.length;try{audio.src=await getTrack(idx);changing=false;if(wanted)start();}catch(_){changing=false;reflect();}});
+ audio.addEventListener('ended',async()=>{playing=false;reflect();changing=true;idx=(idx+1)%tracks.length;try{audio.src=await getTrack(idx);changing=false;if(wanted)start();}catch(_){changing=false;reflect();}});
  audio.addEventListener('error',()=>{playing=false;reflect();});
  audio.addEventListener('pause',()=>{if(!audio.ended){playing=false;reflect();}});
- const resumeOnGesture=e=>{if(e.isTrusted&&wanted&&!playing&&!e.target?.closest?.('[data-audio-toggle]'))start();};
- for(const type of ['touchend','pointerup','mousedown','click','keydown'])window.addEventListener(type,resumeOnGesture,{capture:true,passive:true});
+ // Run play() directly in a trusted activation; touch pointerdown alone may not unlock audio.
+ const resumeOnGesture=e=>{if(!e.isTrusted||!wanted||playing||e.target?.closest?.('[data-audio-toggle]'))return;if(e.type==='pointerdown'&&e.pointerType!=='mouse')return;start();};
+ for(const type of ['pointerdown','pointerup','touchend','click','keydown'])document.addEventListener(type,resumeOnGesture,{capture:true,passive:true});
  window.addEventListener('pageshow',()=>{if(wanted&&!playing)start();});
  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&wanted&&!playing)start();});
  function prepareCaps(scope=document){scope.querySelectorAll('.dropcap img').forEach(img=>{const cap=img.closest('.dropcap');const show=()=>{if(img.naturalWidth>0)cap.classList.add('cap-ready');};if(img.complete)show();else img.addEventListener('load',show,{once:true});img.addEventListener('error',()=>cap.classList.remove('cap-ready'),{once:true});});}
@@ -79,7 +80,7 @@ detectLatestPublicApk();
  prepareCaps(next);if(url.hash){let target;try{target=document.getElementById(decodeURIComponent(url.hash.slice(1)));}catch(_){}if(target)target.scrollIntoView({behavior:'instant',block:'start'});else window.scrollTo(0,0);}else window.scrollTo(0,0);reflect();detectLatestPublicApk();
  }catch(e){if(e.name!=='AbortError')location.assign(url.href);}finally{if(pending===ctl)pending=null;}}
  history.scrollRestoration='manual';
- document.addEventListener('click',e=>{const b=e.target.closest('[data-audio-toggle]');if(b){e.preventDefault();if(wanted)stop();else{wanted=true;audio.autoplay=true;reflect();start();}return;}
+ document.addEventListener('click',e=>{const b=e.target.closest('[data-audio-toggle]');if(b){e.preventDefault();if(playing&&!audio.paused&&!audio.ended)stop();else{wanted=true;audio.autoplay=true;start();reflect();}return;}
  const l=e.target.closest('a[href]');if(!l||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.altKey||e.shiftKey||l.hasAttribute('download')||(l.target&&l.target!=='_self'))return;
  const u=new URL(l.href,location.href);if(u.origin!==location.origin||!u.pathname.startsWith(root.pathname)||!(u.pathname.endsWith('.html')||u.pathname===root.pathname||u.pathname===root.pathname+'en/'))return;
  if(u.href===location.href)return;e.preventDefault();navigate(u,true);});

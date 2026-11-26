@@ -51,7 +51,7 @@ detectLatestPublicApk();
  async function getTrack(i){if(tracks[i])return tracks[i];const files=parts[String(i+1)];const buffers=await Promise.all(files.map(async p=>{const r=await fetch(new URL(p,assetRoot));if(!r.ok)throw Error('Audio part unavailable');return r.arrayBuffer();}));return tracks[i]=URL.createObjectURL(new Blob(buffers,{type:'audio/mpeg'}));}
  let wanted=true,playing=false,idx=0,seq=0,pending=null,blocked=false,changing=false;
  const toggle=()=>document.querySelector('[data-audio-toggle]');
- function reflect(){const b=toggle();if(!b)return;const l=b.querySelector('[data-audio-state]'),uk=document.documentElement.lang==='uk';b.setAttribute('aria-pressed',String(wanted));b.classList.toggle('audio-toggle--on',playing);b.dataset.playback=playing?'playing':wanted?'pending':'off';if(l)l.textContent=playing?b.dataset.textOn:!wanted?b.dataset.textOff:blocked?(uk?'Музика: дотик':'Music: tap'):(uk?'Музика: запуск':'Music: starting');b.title=wanted&&!playing?(uk?'Торкніться будь-де на сторінці, якщо браузер заблокував автозапуск.':'Tap anywhere if your browser blocks autoplay.'):b.getAttribute('aria-label');}
+ function reflect(){const b=toggle();if(!b)return;const l=b.querySelector('[data-audio-state]');b.setAttribute('aria-pressed',String(wanted));b.classList.toggle('audio-toggle--on',wanted);b.dataset.playback=wanted?'on':'off';if(l)l.textContent=wanted?b.dataset.textOn:b.dataset.textOff;b.title=b.getAttribute('aria-label');}
  audio.volume=.5;audio.loop=false;audio.preload='auto';audio.autoplay=true;
  if(audio.src!==tracks[0])audio.src=tracks[0];
  playing=!audio.paused&&!audio.ended;
@@ -79,7 +79,7 @@ detectLatestPublicApk();
  prepareCaps(next);if(url.hash){let target;try{target=document.getElementById(decodeURIComponent(url.hash.slice(1)));}catch(_){}if(target)target.scrollIntoView({behavior:'instant',block:'start'});else window.scrollTo(0,0);}else window.scrollTo(0,0);reflect();detectLatestPublicApk();
  }catch(e){if(e.name!=='AbortError')location.assign(url.href);}finally{if(pending===ctl)pending=null;}}
  history.scrollRestoration='manual';
- document.addEventListener('click',e=>{const b=e.target.closest('[data-audio-toggle]');if(b){e.preventDefault();if(playing)stop();else{wanted=true;audio.autoplay=true;start();}return;}
+ document.addEventListener('click',e=>{const b=e.target.closest('[data-audio-toggle]');if(b){e.preventDefault();if(wanted)stop();else{wanted=true;audio.autoplay=true;reflect();start();}return;}
  const l=e.target.closest('a[href]');if(!l||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.altKey||e.shiftKey||l.hasAttribute('download')||(l.target&&l.target!=='_self'))return;
  const u=new URL(l.href,location.href);if(u.origin!==location.origin||!u.pathname.startsWith(root.pathname)||!(u.pathname.endsWith('.html')||u.pathname===root.pathname||u.pathname===root.pathname+'en/'))return;
  if(u.href===location.href)return;e.preventDefault();navigate(u,true);});

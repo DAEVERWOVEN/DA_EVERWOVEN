@@ -51,13 +51,16 @@ detectLatestPublicApk();
  async function getTrack(i){if(tracks[i])return tracks[i];const files=parts[String(i+1)];const buffers=await Promise.all(files.map(async p=>{const r=await fetch(new URL(p,assetRoot));if(!r.ok)throw Error('Audio part unavailable');return r.arrayBuffer();}));return tracks[i]=URL.createObjectURL(new Blob(buffers,{type:'audio/mpeg'}));}
  let wanted=true,playing=false,idx=0,seq=0,pending=null;
  const toggle=()=>document.querySelector('[data-audio-toggle]');
- function reflect(){const b=toggle();if(!b)return;const l=b.querySelector('[data-audio-state]');b.setAttribute('aria-pressed',String(playing));b.classList.toggle('audio-toggle--on',playing);if(l)l.textContent=playing?b.dataset.textOn:b.dataset.textOff;}
- audio.volume=.5;audio.loop=false;audio.src=tracks[0];
+ function reflect(){const b=toggle();if(!b)return;const l=b.querySelector('[data-audio-state]');b.setAttribute('aria-pressed',String(wanted));b.classList.toggle('audio-toggle--on',wanted);b.dataset.playback=playing?'playing':wanted?'pending':'off';if(l)l.textContent=wanted?b.dataset.textOn:b.dataset.textOff;const uk=document.documentElement.lang==='uk';b.title=wanted&&!playing?(uk?'Музика увімкнена. Якщо браузер заблокував звук, торкніться сторінки.':'Music enabled. If autoplay is blocked, tap the page.'):b.getAttribute('aria-label');}
+ audio.volume=.5;audio.loop=false;audio.preload='auto';audio.src=tracks[0];
  async function start(){if(!wanted||playing||changing)return;const attempt=++seq;try{await audio.play();if(attempt!==seq||!wanted){if(!wanted)audio.pause();return;}playing=true;getTrack((idx+1)%tracks.length).catch(()=>{});}catch(_){if(attempt===seq)playing=false;}reflect();}
  function stop(){wanted=false;++seq;audio.pause();playing=false;reflect();}
  let changing=false; audio.addEventListener('ended',async()=>{playing=false;changing=true;idx=(idx+1)%tracks.length;try{audio.src=await getTrack(idx);changing=false;if(wanted)start();}catch(_){changing=false;reflect();}});
  audio.addEventListener('error',()=>{playing=false;reflect();});
- document.addEventListener('pointerdown',e=>{if(!e.target.closest('[data-audio-toggle]')&&wanted&&!playing)start();},{capture:true});
+ const resumeOnGesture=e=>{if(!e.target.closest('[data-audio-toggle]')&&wanted&&!playing)start();};
+ document.addEventListener('pointerdown',resumeOnGesture,{capture:true});
+ document.addEventListener('pointerup',resumeOnGesture,{capture:true});
+ document.addEventListener('click',resumeOnGesture,{capture:true});
  document.addEventListener('keydown',e=>{if(!e.target.closest('[data-audio-toggle]')&&wanted&&!playing)start();},{capture:true});
  function prepareCaps(scope=document){scope.querySelectorAll('.dropcap img').forEach(img=>{const cap=img.closest('.dropcap');const show=()=>{if(img.naturalWidth>0)cap.classList.add('cap-ready');};if(img.complete)show();else img.addEventListener('load',show,{once:true});img.addEventListener('error',()=>cap.classList.remove('cap-ready'),{once:true});});}
  prepareCaps();

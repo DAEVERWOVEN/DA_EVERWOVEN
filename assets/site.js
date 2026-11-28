@@ -9,7 +9,7 @@ const DA_SITE = {
   folderId: "1aBBBQ98PW-Z27yMna14Dv4Wbig6ooo4u",
   driveApiKey: "" // Optional: required only to auto-detect newly uploaded *separate* APKs.
 };
-const daFileLink = id => `https://drive.google.com/file/d/${encodeURIComponent(id)}/view`;
+const daFileLink = id => `https://drive.google.com/uc?export=download&id=${encodeURIComponent(id)}`;
 
 // When the APK is replaced via Drive > Manage versions > Upload new version,
 // the original file ID and public URL remain the same. No API key is needed.
